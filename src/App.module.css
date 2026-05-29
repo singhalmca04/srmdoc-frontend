@@ -1,0 +1,7 @@
+.title {
+  color: green;
+  transform: rotate(270deg);
+  position: fixed;
+  top:40%;
+  left:-130px;
+}

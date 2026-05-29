@@ -1,0 +1,17 @@
+$primaryColor: green;
+$headerColor: red;
+
+@mixin headColor {
+    font-size: 20px;
+    color: white;
+}
+
+.head {
+    background-color: $headerColor;
+   @include headColor;
+   color: blue;
+    &:hover {
+        background-color: $primaryColor;
+         
+    }
+}

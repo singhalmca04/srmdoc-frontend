@@ -1,0 +1,16 @@
+$primaryColor: blue;
+$mainColor: green;
+
+@mixin buttonStyle {
+    padding: 10px;
+    border-radius: 5px;
+}
+button {
+    background-color: $mainColor;
+    color: $primaryColor;
+    @include buttonStyle;
+
+    &:hover {
+        color:red;
+    }
+}
