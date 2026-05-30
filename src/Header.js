@@ -209,11 +209,12 @@ function Header() {
 
                         <div style={{ marginBottom: 12 }}>
                             <label style={{ display: 'block', marginBottom: 6 }}>Address</label>
-                            <input
+                            <textarea
                                 name="address"
                                 value={formData.address}
                                 onChange={handleInputChange}
                                 placeholder="Enter address"
+                                rows={4}
                                 style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
                             />
                         </div>
