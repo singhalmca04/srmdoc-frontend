@@ -112,7 +112,7 @@ function Header() {
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'student-letter.pdf';
+            link.download = `${formData.reference_no +'-'+ formData.name }.pdf`;
             document.body.appendChild(link);
             link.click();
             link.remove();
