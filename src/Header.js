@@ -95,7 +95,8 @@ function Header() {
 
         try {
             setDownloading(true);
-            const response = await fetch(apiUrl + '/downloadpdf', {
+            const endpoint = uploadedRows.length > 0 ? '/downloadpdfbulk' : '/downloadpdf';
+            const response = await fetch(apiUrl + endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -112,7 +113,11 @@ function Header() {
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `${formData.reference_no +'-'+ formData.name }.pdf`;
+            if (uploadedRows.length > 0) {
+                link.download = `student-letters-${new Date().getTime()}.zip`;
+            } else {
+                link.download = `${formData.reference_no +'-'+ formData.name }.pdf`;
+            }
             document.body.appendChild(link);
             link.click();
             link.remove();
@@ -148,8 +153,8 @@ function Header() {
             <div className="header-form" style={{ maxWidth: 720, margin: '0 auto', padding: 16 }}>
                 <h2>Student Information</h2>
                 <p style={{ color: '#555', marginTop: 8 }}>
-                Use the name/address fields directly, or upload an Excel file with Name and Address columns. The PDF is generated from the backend template.
-            </p>
+                    Use the name/address fields directly, or upload an Excel file with Name and Address columns. The PDF is generated from the backend template.
+                </p>
                 <div style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
                     <button
                         type="button"
@@ -217,64 +222,66 @@ function Header() {
 
                 {activeTab === 'excel' && (
                     <>
-                    <div style={{ marginBottom: 12 }}>
-                        <label style={{ display: 'block', marginBottom: 6 }}>Upload Excel (name/address)</label>
-                        <input
-                            type="file"
-                            accept=".xlsx,.xls"
-                            onChange={handleFileSelect}
-                            style={{ display: 'block' }}
-                        />
+                        <div style={{ marginBottom: 12 }}>
+                            <label style={{ display: 'block', marginBottom: 6 }}>Upload Excel (name/address)</label>
+                            <input
+                                type="file"
+                                accept=".xlsx,.xls"
+                                onChange={handleFileSelect}
+                                style={{ display: 'block' }}
+                            />
                         </div>
                         <div style={{ marginBottom: 12 }}>
-                        <button
-                            onClick={handleUpload}
-                            disabled={uploadedRows.length === 0}
-                            style={{
-                                padding: '10px 16px',
-                                borderRadius: 4,
-                                border: 'none',
-                                backgroundColor: uploadedRows.length > 0 ? '#1976d2' : '#bbb',
-                                color: '#fff',
-                                cursor: uploadedRows.length > 0 ? 'pointer' : 'not-allowed'
-                            }}
-                        >
-                            Confirm Upload
-                        </button>
-                    </div>
-                    {uploadedRows.length > 0 && (
-                <div style={{ marginTop: 20 }}>
-                    <h3>Parsed Excel rows</h3>
-                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                        <thead>
-                            <tr>
-                                <th style={{ border: '1px solid #ddd', padding: 8 }}>Name</th>
-                                <th style={{ border: '1px solid #ddd', padding: 8 }}>Address</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {uploadedRows.map((row, index) => (
-                                <tr key={index}>
-                                    <td style={{ border: '1px solid #ddd', padding: 8 }}>{row.name}</td>
-                                    <td style={{ border: '1px solid #ddd', padding: 8 }}>{row.address}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
-            {message && <p style={{ marginTop: 12 }}>{message}</p>}
-                    {/* <div style={{ marginBottom: 12 }}>
-                    <label style={{ display: 'block', marginBottom: 6 }}>Rendered preview</label>
-                    <div
-                        style={{ padding: 16, backgroundColor: '#f6f6f6', borderRadius: 4, minHeight: 80 }}
-                        dangerouslySetInnerHTML={{ __html: renderedTemplate }}
-                    />
-                </div> */}
-                </>
+                            <button
+                                onClick={handleUpload}
+                                disabled={uploadedRows.length === 0}
+                                style={{
+                                    padding: '10px 16px',
+                                    borderRadius: 4,
+                                    border: 'none',
+                                    backgroundColor: uploadedRows.length > 0 ? '#1976d2' : '#bbb',
+                                    color: '#fff',
+                                    cursor: uploadedRows.length > 0 ? 'pointer' : 'not-allowed'
+                                }}
+                            >
+                                Confirm Upload
+                            </button>
+                        </div>
+                        {uploadedRows.length > 0 && (
+                            <div style={{ marginTop: 20 }}>
+                                <h3>Parsed Excel rows</h3>
+                                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                    <thead>
+                                        <tr>
+                                            <th style={{ border: '1px solid #ddd', padding: 8 }}>Reference No</th>
+                                            <th style={{ border: '1px solid #ddd', padding: 8 }}>Name</th>
+                                            <th style={{ border: '1px solid #ddd', padding: 8 }}>Address</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {uploadedRows.map((row, index) => (
+                                            <tr key={index}>
+                                                <td style={{ border: '1px solid #ddd', padding: 8 }}>{row.reference_no}</td>
+                                                <td style={{ border: '1px solid #ddd', padding: 8 }}>{row.name}</td>
+                                                <td style={{ border: '1px solid #ddd', padding: 8 }}>{row.address}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+                        {message && <p style={{ marginTop: 12 }}>{message}</p>}
+                        {/* <div style={{ marginBottom: 12 }}>
+                        <label style={{ display: 'block', marginBottom: 6 }}>Rendered preview</label>
+                        <div
+                            style={{ padding: 16, backgroundColor: '#f6f6f6', borderRadius: 4, minHeight: 80 }}
+                            dangerouslySetInnerHTML={{ __html: renderedTemplate }}
+                        />
+                    </div> */}
+                    </>
                 )}
 
-                
+
 
                 <div style={{ marginBottom: 12 }}>
                     <label style={{ display: 'block', marginBottom: 6 }}><h3>Template fetched from backend</h3></label>
