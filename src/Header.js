@@ -313,8 +313,6 @@ function Header() {
                     </>
                 )}
 
-
-
                 {/* <div style={{ marginBottom: 12 }}>
                     <label style={{ display: 'block', marginBottom: 6 }}><h3>Template fetched from backend</h3></label>
                     <div style={{ border: '1px solid #ccc', borderRadius: 4, overflow: 'hidden' }}>
