@@ -66,16 +66,6 @@ function Header() {
         }
     };
 
-    const handleUpload = async (event) => {
-        event.preventDefault();
-        if (uploadedRows.length === 0) {
-            setMessage('No rows to upload. Select and parse an Excel file first.');
-            return;
-        }
-
-        setMessage('Uploaded ' + uploadedRows.length + ' row(s) successfully.');
-    };
-
     const handleGenerateLetter = async () => {
         setMessage('');
 
@@ -150,37 +140,37 @@ function Header() {
 
     return (
         <>
-             <div
-            style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '10px 20px',
-                boxSizing: 'border-box',
-                borderBottom: '2px solid #e0aa3d',
-                marginBottom: '20px',
-                backgroundColor: '#a1b3ed'
-            }}
-        >
-            <img
-                src="/left-logo.png"
-                alt="Left Logo"
+            <div
                 style={{
-                    height: '80px',
-                    objectFit: 'contain'
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '10px 20px',
+                    boxSizing: 'border-box',
+                    borderBottom: '2px solid #e0aa3d',
+                    marginBottom: '20px',
+                    backgroundColor: '#a1b3ed'
                 }}
-            />
+            >
+                <img
+                    src="/left-logo.png"
+                    alt="Left Logo"
+                    style={{
+                        height: '80px',
+                        objectFit: 'contain'
+                    }}
+                />
 
-            <img
-                src="/srm-logo.png"
-                alt="Right Logo"
-                style={{
-                    height: '70px',
-                    objectFit: 'contain'
-                }}
-            />
-        </div>
+                <img
+                    src="/srm-logo.png"
+                    alt="Right Logo"
+                    style={{
+                        height: '70px',
+                        objectFit: 'contain'
+                    }}
+                />
+            </div>
             <div className="header-form" style={{ maxWidth: 720, margin: '0 auto', padding: 16 }}>
                 <h2>Student Information</h2>
                 <p style={{ color: '#555', marginTop: 8 }}>
@@ -254,30 +244,45 @@ function Header() {
 
                 {activeTab === 'excel' && (
                     <>
+                        <div
+                            style={{
+                                marginBottom: '15px',
+                                padding: '12px',
+                                backgroundColor: '#f5f9ff',
+                                border: '1px solid #d6e4ff',
+                                borderRadius: '6px'
+                            }}
+                        >
+                            <strong>Sample Excel Format</strong>
+
+                            <p style={{ margin: '8px 0' }}>
+                                Download the sample Excel file and use the same column names:
+                                <strong> reference_no, name, address</strong>
+                            </p>
+
+                            <a
+                                href="/sample_student.xlsx"
+                                download
+                                style={{
+                                    display: 'inline-block',
+                                    padding: '8px 14px',
+                                    backgroundColor: '#1976d2',
+                                    color: '#fff',
+                                    textDecoration: 'none',
+                                    borderRadius: '4px'
+                                }}
+                            >
+                                Download Sample Excel
+                            </a>
+                        </div>
                         <div style={{ marginBottom: 12 }}>
-                            <label style={{ display: 'block', marginBottom: 6 }}>Upload Excel (name/address)</label>
+                            <label style={{ display: 'block', marginBottom: 6 }}><strong>Upload Excel (name/address)</strong></label>
                             <input
                                 type="file"
                                 accept=".xlsx,.xls"
                                 onChange={handleFileSelect}
                                 style={{ display: 'block' }}
                             />
-                        </div>
-                        <div style={{ marginBottom: 12 }}>
-                            <button
-                                onClick={handleUpload}
-                                disabled={uploadedRows.length === 0}
-                                style={{
-                                    padding: '10px 16px',
-                                    borderRadius: 4,
-                                    border: 'none',
-                                    backgroundColor: uploadedRows.length > 0 ? '#1976d2' : '#bbb',
-                                    color: '#fff',
-                                    cursor: uploadedRows.length > 0 ? 'pointer' : 'not-allowed'
-                                }}
-                            >
-                                Confirm Upload
-                            </button>
                         </div>
                         {uploadedRows.length > 0 && (
                             <div style={{ marginTop: 20 }}>
@@ -315,7 +320,7 @@ function Header() {
 
 
 
-                <div style={{ marginBottom: 12, display:'none' }}>
+                <div style={{ marginBottom: 12, display: 'none' }}>
                     <label style={{ display: 'block', marginBottom: 6 }}><h3>Template fetched from backend</h3></label>
                     <div style={{ border: '1px solid #ccc', borderRadius: 4, overflow: 'hidden' }}>
                         <CodeMirror
@@ -376,9 +381,9 @@ function Header() {
                     backgroundColor: '#a1b3ed',
                 }}
             >
-                <p> SRM Institute of Science and Technology, Delhi-NCR Campus <br/>
-                Office of Admissions & Outreach <br/>
-                © {new Date().getFullYear()} SRMIST. All Rights Reserved. </p>
+                <p> SRM Institute of Science and Technology, Delhi-NCR Campus <br />
+                    Office of Admissions & Outreach <br />
+                    © {new Date().getFullYear()} SRMIST. All Rights Reserved. </p>
             </footer>
         </>
     );
