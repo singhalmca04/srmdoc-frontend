@@ -313,7 +313,9 @@ function Header() {
                     </>
                 )}
 
-                {/* <div style={{ marginBottom: 12 }}>
+
+
+                <div style={{ marginBottom: 12, display:'none' }}>
                     <label style={{ display: 'block', marginBottom: 6 }}><h3>Template fetched from backend</h3></label>
                     <div style={{ border: '1px solid #ccc', borderRadius: 4, overflow: 'hidden' }}>
                         <CodeMirror
@@ -349,7 +351,7 @@ function Header() {
                             <div style={{ padding: 16, backgroundColor: '#f6f6f6', borderRadius: 4, minHeight: 80 }} dangerouslySetInnerHTML={{ __html: filledPreview }} />
                         )}
                     </div>
-                </div> */}
+                </div>
             </div>
 
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
