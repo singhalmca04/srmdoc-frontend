@@ -116,7 +116,7 @@ function Header() {
             if (uploadedRows.length > 0) {
                 link.download = `student-letters-${new Date().getTime()}.zip`;
             } else {
-                link.download = `${formData.reference_no +'-'+ formData.name }.pdf`;
+                link.download = `${formData.reference_no + '-' + formData.name}.pdf`;
             }
             document.body.appendChild(link);
             link.click();
@@ -150,6 +150,37 @@ function Header() {
 
     return (
         <>
+             <div
+            style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '10px 20px',
+                boxSizing: 'border-box',
+                borderBottom: '2px solid #e0aa3d',
+                marginBottom: '20px',
+                backgroundColor: '#a1b3ed'
+            }}
+        >
+            <img
+                src="/left-logo.png"
+                alt="Left Logo"
+                style={{
+                    height: '80px',
+                    objectFit: 'contain'
+                }}
+            />
+
+            <img
+                src="/srm-logo.png"
+                alt="Right Logo"
+                style={{
+                    height: '70px',
+                    objectFit: 'contain'
+                }}
+            />
+        </div>
             <div className="header-form" style={{ maxWidth: 720, margin: '0 auto', padding: 16 }}>
                 <h2>Student Information</h2>
                 <p style={{ color: '#555', marginTop: 8 }}>
@@ -333,6 +364,22 @@ function Header() {
                     {downloading ? 'Generating...' : 'Generate Letter'}
                 </button>
             </div>
+            <footer
+                style={{
+                    textAlign: 'center',
+                    marginTop: '20px',
+                    borderTop: '2px solid #e0aa3d',
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    paddingBottom: '1px',
+                    fontSize: '14px',
+                    backgroundColor: '#a1b3ed',
+                }}
+            >
+                <p> SRM Institute of Science and Technology, Delhi-NCR Campus <br/>
+                Office of Admissions & Outreach <br/>
+                © {new Date().getFullYear()} SRMIST. All Rights Reserved. </p>
+            </footer>
         </>
     );
 }
