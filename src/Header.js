@@ -312,7 +312,6 @@ function Header() {
                                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                     <thead>
                                         <tr>
-                                            <th style={{ border: '1px solid #ddd', padding: 8 }}>Reference No</th>
                                             <th style={{ border: '1px solid #ddd', padding: 8 }}>Name</th>
                                             <th style={{ border: '1px solid #ddd', padding: 8 }}>Address</th>
                                         </tr>
@@ -320,7 +319,6 @@ function Header() {
                                     <tbody>
                                         {uploadedRows.map((row, index) => (
                                             <tr key={index}>
-                                                <td style={{ border: '1px solid #ddd', padding: 8 }}>{row.reference_no}</td>
                                                 <td style={{ border: '1px solid #ddd', padding: 8 }}>{row.name}</td>
                                                 <td style={{ border: '1px solid #ddd', padding: 8 }}>{row.address}</td>
                                             </tr>
