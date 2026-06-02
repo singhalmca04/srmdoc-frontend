@@ -6,7 +6,7 @@ import { html } from '@codemirror/lang-html';
 const apiUrl = process.env.REACT_APP_API_URL;
 
 function Header() {
-    const [formData, setFormData] = useState({ name: '', address: '', reference_no: '' });
+    const [formData, setFormData] = useState({ name: '', address: '' });
     const [template, setTemplate] = useState('');
     const [initialTemplate, setInitialTemplate] = useState('');
     const [uploadedRows, setUploadedRows] = useState([]);
@@ -79,7 +79,7 @@ function Header() {
     const handleGenerateLetter = async () => {
         setMessage('');
 
-        if (!formData.name && !formData.address && !formData.reference_no && uploadedRows.length === 0) {
+        if (!formData.name && !formData.address && uploadedRows.length === 0) {
             setMessage('Enter a name/address or upload an Excel file before generating the letter.');
             return;
         }
@@ -87,7 +87,6 @@ function Header() {
         const payload = {
             name: formData.name,
             address: formData.address,
-            reference_no: formData.reference_no,
             students: uploadedRows,
             template,
             showHtmlAsCode
@@ -154,8 +153,7 @@ function Header() {
 
     const filledPreview = template
         .replace(/{{\s*name\s*}}/gi, previewData.name || '[name]')
-        .replace(/{{\s*address\s*}}/gi, previewData.address || '[address]')
-        .replace(/{{\s*reference_no\s*}}/gi, previewData.reference_no || '[reference_no]');
+        .replace(/{{\s*address\s*}}/gi, previewData.address || '[address]');
 
     return (
         <>
@@ -230,16 +228,6 @@ function Header() {
                 {activeTab === 'text' && (
                     <>
                         <div style={{ marginBottom: 12 }}>
-                            <label style={{ display: 'block', marginBottom: 6 }}>Reference Number</label>
-                            <input
-                                name="reference_no"
-                                value={formData.reference_no}
-                                onChange={handleInputChange}
-                                placeholder="Enter reference number"
-                                style={{ width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-                            />
-                        </div>
-                        <div style={{ marginBottom: 12 }}>
                             <label style={{ display: 'block', marginBottom: 6 }}>Student Name</label>
                             <input
                                 name="name"
@@ -279,7 +267,7 @@ function Header() {
 
                             <p style={{ margin: '8px 0' }}>
                                 Download the sample Excel file and use the same column names:
-                                <strong> reference_no, name, address</strong>
+                                <strong> name, address</strong>
                             </p>
 
                             <a
