@@ -271,7 +271,7 @@ function Header() {
                             </p>
 
                             <a
-                                href="/sample_student.xlsx"
+                                href="/sample_students.xlsx"
                                 download
                                 style={{
                                     display: 'inline-block',
