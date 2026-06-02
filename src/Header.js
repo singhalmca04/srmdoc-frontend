@@ -130,6 +130,12 @@ function Header() {
             link.click();
             link.remove();
             window.URL.revokeObjectURL(url);
+            setFormData({ name: '', address: '' });
+            setUploadedRows([]);
+            const fileInput = document.querySelector('input[type="file"]');
+            if (fileInput) {
+                fileInput.value = '';
+            }
             setMessage('PDF downloaded successfully.');
         } catch (error) {
             console.error(error);
