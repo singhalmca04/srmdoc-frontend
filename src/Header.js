@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import './App.scss';
 import CodeMirror from '@uiw/react-codemirror';
 import { html } from '@codemirror/lang-html';
+// import LoginModal from "./LoginModal"; 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 function Header() {
@@ -13,9 +14,15 @@ function Header() {
     const [showHtmlAsCode, setShowHtmlAsCode] = useState(false);
     const [message, setMessage] = useState('');
     const [downloading, setDownloading] = useState(false);
+    // const [showLoginModal, setShowLoginModal] = useState(false);
 
     useEffect(() => {
         console.log(apiUrl + 'Fetching template from backend...');
+        // const loggedIn = localStorage.getItem("isLoggedIn");
+        // if (!loggedIn) {
+        //     setShowLoginModal(true);
+        // }
+        // console.log(loggedIn, 'l1');
         fetch(apiUrl + '/template')
             .then((res) => res.json())
             .then((data) => {
@@ -49,6 +56,9 @@ function Header() {
         try {
             const response = await fetch(apiUrl + '/uploadstudents', {
                 method: 'POST',
+                // headers: {
+                //     'Authorization': `Bearer ${localStorage.getItem('token')}`
+                // },
                 body: form,
             });
             const result = await response.json();
@@ -89,7 +99,8 @@ function Header() {
             const response = await fetch(apiUrl + endpoint, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify(payload)
             });
@@ -100,13 +111,21 @@ function Header() {
             }
 
             const blob = await response.blob();
+            const disposition = response.headers.get('Content-Disposition');
+            let filename = formData.name + '.pdf';
+            if (disposition) {
+                const match = disposition.match(/filename="?([^"]+)"?/i);
+                if (match && match[1]) {
+                    filename = match[1];
+                }
+            }
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
             if (uploadedRows.length > 0) {
                 link.download = `student-letters-${new Date().getTime()}.zip`;
             } else {
-                link.download = `${formData.reference_no + '-' + formData.name}.pdf`;
+                link.download = filename;
             }
             document.body.appendChild(link);
             link.click();
@@ -140,6 +159,9 @@ function Header() {
 
     return (
         <>
+            {/* {showLoginModal && (
+                <LoginModal onClose={() => setShowLoginModal(false)} />
+            )} */}
             <div
                 style={{
                     width: '100%',
